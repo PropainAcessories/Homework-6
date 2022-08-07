@@ -7,7 +7,10 @@
     min-width: 35%;
     min-height: auto;
 }
-
+#cities {
+    flex-flow: column nowrap;
+    min-width: 40%;
+}
 .btn {
     min-width: 100%;
 }

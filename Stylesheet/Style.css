@@ -1,0 +1,46 @@
+.bg-primary {
+    font-weight: bold;
+}
+
+.float-left {
+    min-width: 35%;
+}
+
+.btn {
+    min-width: 100%;
+}
+
+.float-right {
+    min-width: 65%;
+    min-height: auto;
+}
+
+.card-deck {
+    min-width: 95%;
+    min-height: auto;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+@media screen and (max-width: 725px) {
+    body {
+        flex: 0 2 0;
+    }
+}
+
+@media screen and (max-width: 565px) {
+    body {
+        flex: 0 2 0;
+    }
+}
+
+@media screen and (max-width: 340px) {
+    body {
+        flex: 0 2 0;
+    }
+}

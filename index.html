@@ -5,60 +5,72 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-         <link rel = "SASS" href = "./Stylesheet/index.css">
+         <link rel = "Stylesheet" href = "./Stylesheet/Style.css">
         <title>OPEN-WEATHER-MAP</title>
     </head>
     <body>
-        <header class = "p-3 mb-2 bg-primary bg-gradient text-white" id = "gradient">Weather Dashboard.</header>
+        <header class = "display-3 text-center p-3 mb-2 bg-primary text-white">
+          Weather Dashboard.</header>
 
-        <div class="jumbotron jumbotron-fluid">
+          <form class = "float-left  mb-2">
+            <div class="form-row">
+              <div class="col-7">
+                <input type="text" class="form-control" placeholder="City">
+                <button type="submit" class = "btn btn-info btn-lg mb-2" id = "searchBtn">SEARCH</button>
+                <button type="reset" class = "btn btn-info btn-lg mb-2" id = "resetBtn">Clear Cities</button>
+              </div>
+              <div class = "cities" id = "cities">      
+              </div>
+            </div>
+          </form>
+            
+          <div class="jumbotron jumbotron-fluid float-right">
             <div class="container">
               <h1 class="display-4">Cityname</h1>
               <p class="lead">Placeholder</p>
             </div>
           </div>
 
-        <div class = "card-deck">
+          <div class = "card-deck">
 
-            <div class = "card">
-              <div class = "card-body" id = "forecast-1">
-                <h5 class = "card-title">Card title</h5>
-                <p class = "card-text"></p>
-              </div>  
-            </div>
-    
-            <div class = "card">
-                <div class = "card-body" id = "forecast-2">
+              <div class = "card bg-info text-white">
+                <div class = "card-body" id = "forecast-1">
                   <h5 class = "card-title">Card title</h5>
-                  <p class = "card-text"></p>
+                  <p class = "card-text">forecast</p>
                 </div>  
               </div>
-                           
-            <div class = "card">
-                <div class = "card-body" id = "forecast-3">
-                  <h5 class = "card-title">Card title</h5>
-                  <p class = "card-text"></p>
-                </div>  
+      
+              <div class = "card bg-info text-white">
+                  <div class = "card-body" id = "forecast-2">
+                    <h5 class = "card-title">Card title</h5>
+                    <p class = "card-text">forecast</p>
+                  </div>  
+                </div>
+                            
+              <div class = "card bg-info text-white">
+                  <div class = "card-body" id = "forecast-3">
+                    <h5 class = "card-title">Card title</h5>
+                    <p class = "card-text">forecast</p>
+                  </div>  
+                </div>
+                
+              <div class = "card bg-info text-white">
+                  <div class = "card-body" id = "forecast-4">
+                    <h5 class = "card-title">Card title</h5>
+                    <p class = "card-text">forecast</p>
+                  </div>  
+                </div>
+                
+              <div class = "card bg-info text-white">
+                  <div class = "card-body" id = "forecast-5">
+                    <h5 class = "card-title">Card title</h5>
+                    <p class = "card-text">forecast</p>
+                  </div>  
               </div>
-              
-            <div class = "card">
-                <div class = "card-body" id = "forecast-4">
-                  <h5 class = "card-title">Card title</h5>
-                  <p class = "card-text"></p>
-                </div>  
-              </div>
-              
-            <div class = "card">
-                <div class = "card-body" id = "forecast-5">
-                  <h5 class = "card-title">Card title</h5>
-                  <p class = "card-text"></p>
-                </div>  
-              </div>
-        </div>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sass.js/0.6.2/sass.min.js"
-         integrity="sha512-lmuNSGprTM9SdDQ8WuvkeGSgUn4R7jogp37VuQ8rrdNOSHQ9UDY9PF5f/gXjhMytuvxf3NADUXL+eb7K0DvIcw=="
-         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+          </div>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/sass.js/0.6.2/sass.min.js"
+          integrity="sha512-lmuNSGprTM9SdDQ8WuvkeGSgUn4R7jogp37VuQ8rrdNOSHQ9UDY9PF5f/gXjhMytuvxf3NADUXL+eb7K0DvIcw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </body>
 </html>

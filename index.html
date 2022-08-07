@@ -10,7 +10,7 @@
          <link rel = "Stylesheet" href = "./Stylesheet/Style.css">
         <title>OPEN-WEATHER-MAP</title>
     </head>
-    <body>
+    <body class = "bg-secondary">
         <header id = "header" class = "bg-dark display-4 text-center p-3 mb-2 text-white">
           Weather Dashboard.
         </header>
@@ -19,8 +19,8 @@
               <div class="form-row">
                 <div class="col-7">
                   <input id ="userSearch" type="text" class="form-control mb-2" placeholder="City">
-                  <button type="submit" class = "btn btn-info btn-lg mb-2" id = "searchBtn">SEARCH</button>
-                  <button type="reset" class = "btn btn-info btn-lg mb-2" id = "resetBtn">Clear Cities</button>
+                  <button type="submit" class = "btn btn-danger btn-lg mb-2" id = "searchBtn">SEARCH</button>
+                  <button type="reset" class = "btn btn-danger btn-lg mb-2" id = "resetBtn">Clear Cities</button>
                 </div>
                 <div class = "cities" id = "cities">      
                 </div>
@@ -77,5 +77,7 @@
           integrity="sha512-lmuNSGprTM9SdDQ8WuvkeGSgUn4R7jogp37VuQ8rrdNOSHQ9UDY9PF5f/gXjhMytuvxf3NADUXL+eb7K0DvIcw=="
           crossorigin="anonymous" referrerpolicy="no-referrer"></script>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    </body>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+          <script src = "./Script/Script.js"></script>
+        </body>
 </html>

@@ -1,9 +1,15 @@
-.bg-primary {
+body {
+    background-color: rgb(103, 102, 104);
+}
+
+.bg-dark {
     font-weight: bold;
+    background: linear-gradient(135deg, #0000 60%, rgb(219, 24, 24));
 }
 
 .float-left {
     min-width: 35%;
+    min-height: auto;
 }
 
 .btn {

@@ -31,10 +31,11 @@ $('#searchBtn').on('click', function(event) {
     currentWeather(city);
     if (!lastSearched.includes(city)) {
         lastSearched.push(city);
-        var searched = $('<button class = "btn-danger-lg mb-2">$(city)</button>');
+        var searched = $('<button></button>');
+        searched.attr('class', 'btn-danger', 'btn-lg', 'float-left', 'mb-2')
         $('#cities').append(searched);
     };
 
-    localStorage.setItem(city, JSON.stringify(lastSearched));
+    localStorage.setItem("city", JSON.stringify(lastSearched));
     console.log(lastSearched);
 });

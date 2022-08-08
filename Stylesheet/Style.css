@@ -9,15 +9,16 @@
 }
 #cities {
     flex-flow: column nowrap;
-    min-width: 40%;
+    min-width: 35%;
 }
 .btn {
     min-width: 100%;
 }
 
-.float-right {
-    min-width: 65%;
+.float-lg-right {
+    min-width: 60%;
     min-height: auto;
+
 }
 
 .card-deck {
@@ -35,6 +36,21 @@
     justify-content: space-around;
 }
 
+.list-group {
+    float: left;
+}
+
+.uv-good {
+    background-color: green;
+}
+
+.uv-bad {
+    background-color: red;
+}
+
+.uv-ugly {
+    background-color: orange;
+}
 
 @media screen and (max-width: 725px) {
     body {

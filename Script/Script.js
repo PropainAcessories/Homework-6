@@ -1,11 +1,12 @@
-var APIkey = '600c61e27cf44906cdc33478a6409187';
+var APIkey = "600c61e27cf44906cdc33478a6409187";
 //var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" +
 //city + "&units=imperial" + "&appid=" + APIKey;
-var lastSearched = [];
+var lastSearched = "";
+var currentLoc = "";
 var today = moment().format('L');
-let i = 0;
 
-var handleErrors = function (response) {
+
+var errorHandler = function (response) {
     if (!response.ok) {
         throw Error(response.statusText);
     }
@@ -14,39 +15,79 @@ var handleErrors = function (response) {
 
 function currentWeather (city) {
 
-   var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${APIkey}`;
+   var queryURL =  "https://api.openweathermap.org/data/2.5/weather?q=" +
+   city + "&units=imperial" + "&appid=" + APIkey;
     
-    $.ajax ({
-        url: queryURL,
-        method: "GET"
-    }).then(function(cityWeatherResponse){
-        console.log(cityWeatherResponse);
+    fetch(queryURL)
+    .then(errorHandler)
+    .then(function(response){
+       return response.json();
+    })
+    .then(function(response){
+        //rememberCity(city);
 
-        var icon = cityWeatherResponse.weather[0].icon;
-        var iconUrl = 'https://openweathermap.org/img/w/${iconCode}.png';
-        // AHHHHHH I HATE THIS BEING ONE LINE I HATE THIS BEING ONE LINE I HATE THIS BEING ONE LINE!
-        var rightHere = $('<h1 id="townDisplay">${cityWeatherResponse.name} ${today} <img src = "${iconUrl}" alt = "{cityWeatherResponse.weather[0].description}" /></h1> <p>Temp: ${cityWeatherResponse.main.temp} °F</p><p>Humidity: ${cityWeatherResponse.main.humidity}%</p><p>Wind speed: ${cityWeatherResponse.main.wind.speed}MPH</p>');
+        var weatherIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png"
+        var utcTime = response.dt;
+        var Timezone = response.timezone;
+        var timeZoneoffset = Timezone / 60 /60;
+        var rightnow = moment.unix(utcTime).utc().utcOffset(timeZoneoffset);
+        
+        //showCities();
 
-        $('#townDisplay').append(rightHere);
+        //forecast(event);
 
-    });
+
+
+        // It took me forever to figure out to use ` these. 
+        //Thanks stack overflow guy from 2014.
+        var Weatherhtml = `
+            <h1>${response.name} ${rightnow.format("(MM/DD/YY)")}<img src="${weatherIcon}"></h1>
+            <ul class = "list-unstyled">
+                <li>Temperature: ${response.main.temp}F°</li>
+                <li>Humidity: ${response.main.humidity}%</li>
+                <li>Wind Speed: ${response.main.humidity}MPH</li>
+                <li id ="uvIndex">UV Index:</li>
+            </ul>`;
+        $('#Weather').html(Weatherhtml);
+
+        var lat = response.coord.lat;
+        var long = response.coord.lon;
+        var sunUrl = "api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&APPID=" + APIkey;
+        
+        // cross origin resource sharing error solution, thanks google.
+        sunUrl = "htttps://cors-anywhere.herokuapp.com/" + sunUrl;
+
+        fetch(sunUrl)
+        .then(errorHandler)
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(response) {
+            var uvIndex = response.value;
+            $('#uvIndex').html(`UV Index: <span id = "uval"> ${uvIndex}</span>`);
+            if (uvIndex >= 0 || uvIndex < 3) {
+                $('#uval').attr("class", "uv-good");
+            } else if (uvIndex >= 3 && uvIndex < 8) {
+                $('#uval').attr("class", "uv-ugly");
+            } else if (uvIndex >= 8) {
+                $('#uval').attr("class", "uv-bad");
+            }
+        });
+    })
 }
+
+// function forecast ()
+
+// function rememberCity ()
+
+// function showCities ()
 
 
 $('#searchBtn').on('click', function(event) {
     event.preventDefault();
-    var city = $('#userSearch').val().trim();
-    currentWeather(city);
-    if (!lastSearched.includes(city)) {
-        lastSearched.push(city);
-        var searched = $('<button></button>');
-        searched.text(lastSearched);
-        searched.attr('class', 'btn-danger', 'mb-2');
-        $('#cities').append(searched);
-    };
+    currentLoc = $('#userSearch').val();
+    currentWeather(event);
 
-    localStorage.setItem("city", JSON.stringify(lastSearched));
-    //console.log(lastSearched);
 });
 
 $(document).on('click', '#cities', function() {

@@ -1,12 +1,11 @@
 var APIkey = "600c61e27cf44906cdc33478a6409187";
-//var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" +
-//city + "&units=imperial" + "&appid=" + APIKey;
 var lastSearched = [];
 var currentLoc = "";
 var today = moment().format('L');
 
 function currentWeather (city) {
 
+    city = $('#userSearch').val().trim();
    var queryURL =  "https://api.openweathermap.org/data/2.5/weather?q=" +
    city + "&units=imperial" + "&appid=" + APIkey;
     
@@ -21,7 +20,7 @@ function currentWeather (city) {
         var Timezone = response.timezone;
         var timeZoneoffset = Timezone / 60 /60;
         var rightnow = moment.unix(utcTime).utc().utcOffset(timeZoneoffset);
-
+        //forecast();
         // It took me forever to figure out to use ` these. 
         //Thanks stack overflow guy from 2014.
         var Weatherhtml = `
@@ -33,7 +32,8 @@ function currentWeather (city) {
                 <li id ="uvIndex">UV Index:</li>
             </ul>`;
         $('#Weather').html(Weatherhtml);
-    
+        
+        //forecast(city);
 
         var lat = response.coord.lat;
         var long = response.coord.lon;
@@ -49,6 +49,9 @@ function currentWeather (city) {
         .then(function(response) {
             var uvIndex = response.value;
             $('#uvIndex').html(`UV Index: <span id = "#uvIndex"> ${uvIndex}</span>`);
+            
+            forecast()
+
             if (uvIndex >= 0 || uvIndex < 3) {
                 $('#uvIndex').attr("class","uv-good");
             }if (uvIndex >= 3 && uvIndex < 8) {
@@ -60,26 +63,27 @@ function currentWeather (city) {
     })
 }
 
-
 function forecast (city) {
-    var city = $('#userSearch').val();
-    var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    var city = $('#userSearch').val().trim();
+
+
+
+    var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q="
     + city + "&units=imperial" + "&APPID=" + APIkey;
 
     fetch(queryUrl)
-    .then(function(response) {
-        return response.json();
+    .then(function(Response) {
+        return Response.json();
     })
-    .then(function(response) {
-        console.log(response);
+    .then(function(Response) {
         $('#forecast').empty()
     var forecasthtml = `
     <h5 class ="display-5">Forecast:</h5>
     <div id ="fiveDayForecstUl" class = "d-flex flex-wrap p-3">`;
-    for (let i=0; i < response.list.length; i++) {
-        var daytime = response.list[i];
+    for (let i=0; i < Response.list.length; i++) {
+        var daytime = Response.list[i];
         var daytimeUtc = daytime.dt;
-        var timezone = response.city.timezone;
+        var timezone = Response.city.timezone;
         var daytimeOffset = timezone /60 /60;
         var rightnow = moment.unix(daytimeUtc).utc().utcOffset(daytimeOffset);
         var iconsrc = "https://openweathermap.org/img/w/" + daytime.weather[0].icon + ".png";
@@ -103,8 +107,7 @@ function forecast (city) {
     })
 }
 
-$('#searchBtn').on('click', function(event) {
-    event.preventDefault();
+$('#searchBtn').on('click', function() {
     var city = $('#userSearch').val().trim();
 
     currentWeather(city);
@@ -118,11 +121,10 @@ $('#searchBtn').on('click', function(event) {
     localStorage.setItem("city", JSON.stringify(lastSearched));
     console.log(lastSearched);
     currentLoc = $('#userSearch').val().trim();
-    currentWeather(event);
-    forecast(event);
+    currentWeather(city);
 });
 
-$('#resetBtn').on("click", function(event) {
+$('#resetBtn').on("click", function() {
     localStorage.clear();
     currentWeather();
     $('.list-group-item').remove();

@@ -1,7 +1,7 @@
 var APIkey = "600c61e27cf44906cdc33478a6409187";
 //var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" +
 //city + "&units=imperial" + "&appid=" + APIKey;
-var lastSearched = "";
+var lastSearched = [];
 var currentLoc = "";
 var today = moment().format('L');
 
@@ -25,7 +25,6 @@ function currentWeather (city) {
         
         //showCities();
 
-        forecast(event);
 
 
 
@@ -67,7 +66,8 @@ function currentWeather (city) {
     })
 }
 
-function forecast (event) {
+
+function forecast (city) {
     var city = $('#userSearch').val();
     var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" +
     + city + "&units=imperial" + "&APPID=" + APIkey;
@@ -106,33 +106,36 @@ function forecast (event) {
       forecasthtml += `</div>`;
       $('#forecast').append(forecasthtml);
     })
-
-
 }
-
-//function rememberCity ()
-
-// function showCities ()
-
 
 $('#searchBtn').on('click', function(event) {
     event.preventDefault();
-    currentLoc = $('#userSearch').val();
-    currentWeather(event);
-
+    var city = $('#userSearch').val().trim();
+    currentWeather(city);
+    if (!lastSearched.includes(city)) {
+        var foundcity = $(`
+        <li class= "list-group-item mb-2">${city}</li>
+        `);
+        $('#cities').append(foundcity);
+    };
+    localStorage.setItem("city", JSON.stringify(lastSearched));
 });
 
-$(document).on('click', '#cities', function() {
-    var cityList = $(this).text();
-    currentWeather(cityList);
+$(document).on('click', '.list-group-item', function() {
+    var listcity = $(this).text();
+    currentWeather(listcity);
 });
 
 $(document).ready(function() {
-    var searchHistory = JSON.parse(localStorage.getItem("city"));
+     var searchHistory = JSON.parse(localStorage.getItem("city"));
 
-    if (searchHistory !== null) {
-        var searchIndex = searchHistory.length - 1;
-        var lastCity = searchHistory[searchIndex];
-        currentWeather(lastCity);
-    }
+     if (searchHistory !== null) {
+         var searchIndex = searchHistory.length - 1;
+         var lastCity = searchHistory[searchIndex];
+         currentWeather(lastCity);
+     }
 });
+
+
+forecast (event);
+currentWeather();

@@ -3,7 +3,7 @@ var lastSearched = [];
 var currentLoc = "";
 var today = moment().format('L');
 
-function currentWeather (city) {
+function currentWeather () {
 
     city = $('#userSearch').val().trim();
    var queryURL =  "https://api.openweathermap.org/data/2.5/weather?q=" +
@@ -63,7 +63,7 @@ function currentWeather (city) {
     })
 }
 
-function forecast (city) {
+function forecast () {
     var city = $('#userSearch').val().trim();
 
 
@@ -107,7 +107,9 @@ function forecast (city) {
     })
 }
 
-$('#searchBtn').on('click', function() {
+
+$('#searchBtn').on('click', function(event) {
+    event.preventDefault();
     var city = $('#userSearch').val().trim();
 
     currentWeather(city);
@@ -121,29 +123,31 @@ $('#searchBtn').on('click', function() {
     localStorage.setItem("city", JSON.stringify(lastSearched));
     console.log(lastSearched);
     currentLoc = $('#userSearch').val().trim();
-    currentWeather(city);
 });
 
-$('#resetBtn').on("click", function() {
+$('#resetBtn').on("click", function(event) {
+    event.preventDefault();
     localStorage.clear();
     currentWeather();
     $('.list-group-item').remove();
 })
 
-$(document).on('click', '.list-group-item', function() {
-    var cityList = $(this).text();
-    currentWeather(cityList);
+$('#cities').on('click',  function(event) {
+    event.preventDefault();
+    $('#userSearch').val(event.target.textContent);
+    currentLoc = $('#userSearch').val();
+    currentWeather(event);
+    // var listcity = $('.list-group-item').text();
+    // currentWeather(listcity);
 });
 
 $(document).ready(function() {
      var searchHistory = JSON.parse(localStorage.getItem("city"));
-
      if (searchHistory !== null) {
          var searchIndex = searchHistory.length - 1;
          var lastCity = searchHistory[searchIndex];
          currentWeather(lastCity);
      }
 });
-
-currentWeather();
-forecast();
+// currentWeather();
+// forecast();

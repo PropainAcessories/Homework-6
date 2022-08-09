@@ -48,9 +48,9 @@ function currentWeather () {
         })
         .then(function(response) {
             var uvIndex = response.value;
-            $('#uvIndex').html(`UV Index: <span id = "#uvIndex"> ${uvIndex}</span>`);
+            $('#uvIndex').html(`UV Index: <span class = "text-white" id = "#uvIndex"> ${uvIndex}</span>`);
             
-            forecast()
+            //forecast()
 
             if (uvIndex >= 0 || uvIndex < 3) {
                 $('#uvIndex').attr("class","uv-good");
@@ -133,12 +133,9 @@ $('#resetBtn').on("click", function(event) {
 })
 
 $(document).on('click', '.list-group-item',  function() {
-    //event.preventDefault();
     $('#userSearch').val(event.target.textContent);
     currentLoc = $('#userSearch').val();
     currentWeather();
-    // var listcity = $('.list-group-item').text();
-    // currentWeather(listcity);
 });
 
 $(document).ready(function() {

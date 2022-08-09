@@ -1,6 +1,6 @@
 .bg-dark {
     font-weight: bold;
-    background: linear-gradient(135deg, #0000 60%, rgb(219, 24, 24));
+    background: linear-gradient(135deg, #0000 45%, rgb(82, 16, 73));
 }
 
 .float-left {
@@ -18,7 +18,6 @@
 .float-md-right {
     min-width: 60%;
     min-height: auto;
-
 }
 
 .card-deck {
@@ -38,6 +37,11 @@
 
 .list-group {
     float: left;
+}
+
+#uvIndex {
+    min-width: auto;
+
 }
 
 .uv-good {
@@ -74,16 +78,42 @@
     body {
         flex-flow: column wrap;
     }
+    
+    .list-group {
+        flex-flow : row wrap;
+    }
+
+    .jumbotron {
+        flex: 0 2 0;
+    }
 }
 
 @media screen and (max-width: 576px) {
     body {
         flex-flow: column wrap;
     }
+    
+    .list-group {
+        flex-flow : row wrap;
+        flex: 0 2 0;
+    }
+ 
+    .jumbotron {
+        flex: 0 4 0;
+    }
 }
 
 @media screen and (max-width: 360px) {
     body {
         flex-flow: column wrap;
+    }
+   
+    .list-group {
+        flex-flow : row wrap;
+        flex: 0 4 0;
+    }
+    
+    .jumbotron {
+        flex: 0 4 0;
     }
 }

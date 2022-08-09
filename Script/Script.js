@@ -33,7 +33,7 @@ function currentWeather () {
             </ul>`;
         $('#Weather').html(Weatherhtml);
         
-        //forecast(city);
+        forecast(city);
 
         var lat = response.coord.lat;
         var long = response.coord.lon;
@@ -108,11 +108,10 @@ function forecast () {
 }
 
 
-$('#searchBtn').on('click', function(event) {
-    event.preventDefault();
+$('#searchBtn').on('click', function() {
     var city = $('#userSearch').val().trim();
-
     currentWeather(city);
+
     if (!lastSearched.includes(city)) {
         lastSearched.push(city)
         var foundcity = $(`
@@ -123,6 +122,7 @@ $('#searchBtn').on('click', function(event) {
     localStorage.setItem("city", JSON.stringify(lastSearched));
     console.log(lastSearched);
     currentLoc = $('#userSearch').val().trim();
+    currentWeather(city);
 });
 
 $('#resetBtn').on("click", function(event) {
@@ -132,11 +132,11 @@ $('#resetBtn').on("click", function(event) {
     $('.list-group-item').remove();
 })
 
-$('#cities').on('click',  function(event) {
-    event.preventDefault();
+$(document).on('click', '.list-group-item',  function() {
+    //event.preventDefault();
     $('#userSearch').val(event.target.textContent);
     currentLoc = $('#userSearch').val();
-    currentWeather(event);
+    currentWeather();
     // var listcity = $('.list-group-item').text();
     // currentWeather(listcity);
 });
@@ -149,5 +149,5 @@ $(document).ready(function() {
          currentWeather(lastCity);
      }
 });
-// currentWeather();
-// forecast();
+currentWeather();
+forecast();

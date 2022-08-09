@@ -52,20 +52,38 @@
     background-color: orange;
 }
 
-@media screen and (max-width: 725px) {
+@media screen and (max-width: 1400px) {
     body {
-        flex: 0 2 0;
+        flex-flow: column wrap;
     }
 }
 
-@media screen and (max-width: 565px) {
+@media screen and (max-width: 1200px) {
     body {
-        flex: 0 2 0;
+        flex-flow: column wrap;
     }
 }
 
-@media screen and (max-width: 340px) {
+@media screen and (max-width: 992px) {
     body {
-        flex: 0 2 0;
+        flex-flow: column wrap;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        flex-flow: column wrap;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    body {
+        flex-flow: column wrap;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    body {
+        flex-flow: column wrap;
     }
 }

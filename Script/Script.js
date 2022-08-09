@@ -25,7 +25,7 @@ function currentWeather (city) {
         
         //showCities();
 
-        //forecast(event);
+        forecast(event);
 
 
 
@@ -57,19 +57,60 @@ function currentWeather (city) {
             var uvIndex = response.value;
             $('#uvIndex').html(`UV Index: <span id = "#uvIndex"> ${uvIndex}</span>`);
             if (uvIndex >= 0 || uvIndex < 3) {
-                $('#uval').attr("class", "uv-good");
+                $('#uvIndex').attr("class", "uv-good");
             } else if (uvIndex >= 3 && uvIndex < 8) {
-                $('#uval').attr("class", "uv-ugly");
+                $('#uIndex').attr("class", "uv-ugly");
             } else if (uvIndex >= 8) {
-                $('#uval').attr("class", "uv-bad");
+                $('#uvIndex').attr("class", "uv-bad");
             }
         });
     })
 }
 
-// function forecast ()
+function forecast (event) {
+    var city = $('#userSearch').val();
+    var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" +
+    + city + "&units=imperial" + "&APPID=" + APIkey;
 
-// function rememberCity ()
+    fetch(queryUrl)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(response) {
+        console.log(response);
+    var forecasthtml = `
+    <h5 class ="display-5">Forecast:</h5>
+    <div id ="fiveDayForecstUl" class = "d-flex flex-wrap p-3">`;
+    for (let i=0; i < response.list.length; i++) {
+        var daytime = response.list[i];
+        var daytimeUtc = daytime.dt;
+        var timezone = response.city.timezone;
+        var daytimeOffset = timezone /60 /60;
+        var rightnow = moment.unix(daytimeUtc).utc().utcOffset(daytimeOffset);
+        var iconsrc = "https://openweathermap.org/img/w/" + daytime.weather[0].icon + ".png";
+
+        if (rightnow.format("HH:mm:ss") === "11:00:00" ||
+            rightnow.format("HH:mm:ss") === "12:00:00" ||
+            rightnow.format("HH:mm:ss") === "13:00:00") {;
+            forecasthtml +=`
+                <div class = "card p-3 bg-secondary">
+                    <ul class ="list-unstyled bg-secondary text-white">
+                        <li>${rightnow.format("MM/DD/YY")}</li>
+                        <li class = "weatherIcon"><img src="${iconsrc}"</li>
+                        <li>Temp: ${daytime.main.temp}F°</li>
+                        <li>Humidity: ${daytime.main.humidity}%</li>
+                    </ul>
+                </div>`;
+        }
+    }
+      forecasthtml += `</div>`;
+      $('#forecast').append(forecasthtml);
+    })
+
+
+}
+
+//function rememberCity ()
 
 // function showCities ()
 

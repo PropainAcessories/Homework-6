@@ -4,7 +4,7 @@
 }
 
 .float-left {
-    min-width: 35%;
+    min-width: 20%;
     min-height: auto;
 }
 #cities {
@@ -12,10 +12,10 @@
     min-width: 35%;
 }
 .btn {
-    min-width: 100%;
+    min-width: 20%;
 }
 
-.float-lg-right {
+.float-md-right {
     min-width: 60%;
     min-height: auto;
 

@@ -1,7 +1,7 @@
 var APIkey = "600c61e27cf44906cdc33478a6409187";
 //var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" +
 //city + "&units=imperial" + "&appid=" + APIKey;
-var lastSearched = [];
+var lastSearched = "";
 var currentLoc = "";
 var today = moment().format('L');
 
@@ -15,7 +15,7 @@ function currentWeather (city) {
        return response.json();
     })
     .then(function(response){
-        //rememberCity(city);
+        
 
         var weatherIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png"
         var utcTime = response.dt;
@@ -23,7 +23,7 @@ function currentWeather (city) {
         var timeZoneoffset = Timezone / 60 /60;
         var rightnow = moment.unix(utcTime).utc().utcOffset(timeZoneoffset);
         
-        //showCities();
+        //forecast(event);
 
 
 
@@ -67,7 +67,7 @@ function currentWeather (city) {
 }
 
 
-function forecast (city) {
+function forecast () {
     var city = $('#userSearch').val();
     var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" +
     + city + "&units=imperial" + "&APPID=" + APIkey;
@@ -110,7 +110,7 @@ function forecast (city) {
 
 $('#searchBtn').on('click', function(event) {
     event.preventDefault();
-    var city = $('#userSearch').val().trim();
+    var city = $('#userSearch').val();
     currentWeather(city);
     if (!lastSearched.includes(city)) {
         var foundcity = $(`
@@ -130,12 +130,12 @@ $(document).ready(function() {
      var searchHistory = JSON.parse(localStorage.getItem("city"));
 
      if (searchHistory !== null) {
-         var searchIndex = searchHistory.length - 1;
+         var searchIndex = searchHistory.length;
          var lastCity = searchHistory[searchIndex];
          currentWeather(lastCity);
      }
 });
 
 
-forecast (event);
+forecast ();
 currentWeather();

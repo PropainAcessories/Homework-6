@@ -15,18 +15,12 @@ function currentWeather (city) {
        return response.json();
     })
     .then(function(response){
-        //rememberCity(city);
 
         var weatherIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png"
         var utcTime = response.dt;
         var Timezone = response.timezone;
         var timeZoneoffset = Timezone / 60 /60;
         var rightnow = moment.unix(utcTime).utc().utcOffset(timeZoneoffset);
-        
-        //showCities();
-
-
-
 
         // It took me forever to figure out to use ` these. 
         //Thanks stack overflow guy from 2014.
@@ -56,10 +50,10 @@ function currentWeather (city) {
             var uvIndex = response.value;
             $('#uvIndex').html(`UV Index: <span id = "#uvIndex"> ${uvIndex}</span>`);
             if (uvIndex >= 0 || uvIndex < 3) {
-                $('#uvIndex').attr("class", "uv-good");
-            } else if (uvIndex >= 3 && uvIndex < 8) {
+                $('#uvIndex').attr("class","uv-good");
+            }if (uvIndex >= 3 && uvIndex < 8) {
                 $('#uIndex').attr("class", "uv-ugly");
-            } else if (uvIndex >= 8) {
+            }if (uvIndex >= 8) {
                 $('#uvIndex').attr("class", "uv-bad");
             }
         });
@@ -78,6 +72,7 @@ function forecast (city) {
     })
     .then(function(response) {
         console.log(response);
+        $('#forecast').empty()
     var forecasthtml = `
     <h5 class ="display-5">Forecast:</h5>
     <div id ="fiveDayForecstUl" class = "d-flex flex-wrap p-3">`;
@@ -104,26 +99,38 @@ function forecast (city) {
         }
     }
       forecasthtml += `</div>`;
-      $('#forecast').append(forecasthtml);
+      $('#forecast').html(forecasthtml);
     })
 }
 
 $('#searchBtn').on('click', function(event) {
     event.preventDefault();
     var city = $('#userSearch').val().trim();
+
     currentWeather(city);
     if (!lastSearched.includes(city)) {
+        lastSearched.push(city)
         var foundcity = $(`
         <li class= "list-group-item mb-2">${city}</li>
         `);
         $('#cities').append(foundcity);
     };
     localStorage.setItem("city", JSON.stringify(lastSearched));
+    console.log(lastSearched);
+    currentLoc = $('#userSearch').val().trim();
+    currentWeather(event);
+    forecast(event);
 });
 
+$('#resetBtn').on("click", function(event) {
+    localStorage.clear();
+    currentWeather();
+    $('.list-group-item').remove();
+})
+
 $(document).on('click', '.list-group-item', function() {
-    var listcity = $(this).text();
-    currentWeather(listcity);
+    var cityList = $(this).text();
+    currentWeather(cityList);
 });
 
 $(document).ready(function() {
@@ -136,6 +143,5 @@ $(document).ready(function() {
      }
 });
 
-
-forecast (event);
 currentWeather();
+forecast();

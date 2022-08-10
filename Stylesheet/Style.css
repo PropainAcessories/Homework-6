@@ -2,10 +2,13 @@ body {
     height: 100%
 }
 
+header {
+    min-width: 100%;
+}
+
 .bg-dark {
     font-weight: bold;
     background: linear-gradient(135deg, #0000 45%, rgb(82, 16, 73));
-    min-width: 100%;
 }
 
 .float-left {
@@ -14,7 +17,6 @@ body {
 }
 #cities {
     flex-flow: row wrap;
-    min-width: 35%;
     justify-content: space-around;
 }
 
@@ -64,7 +66,7 @@ body {
     background-color: orange;
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
     .list-group {
         flex-flow : row nowrap;
     }
@@ -74,7 +76,7 @@ body {
     }
 }
 
-@media screen and (max-width: 576px) {
+@media (max-width: 576px) {
     .list-group {
         flex-flow : row nowrap;
         flex: 0 2 0;
@@ -85,7 +87,7 @@ body {
     }
 }
 
-@media screen and (max-width: 360px) {
+@media (max-width: 360px) {
     .list-group {
         flex-flow : row wrap;
         flex: 0 4 0;

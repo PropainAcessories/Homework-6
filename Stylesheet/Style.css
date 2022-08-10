@@ -70,10 +70,6 @@ header {
     .list-group {
         flex-flow : row nowrap;
     }
-
-    .jumbotron {
-        flex: 0 2 0;
-    }
 }
 
 @media (max-width: 576px) {

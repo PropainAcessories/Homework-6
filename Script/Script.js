@@ -108,8 +108,8 @@ function forecast () {
             rightnow.format("HH:mm:ss") === "12:00:00" ||
             rightnow.format("HH:mm:ss") === "13:00:00") {
             forecasthtml +=`
-                <div class = "card p-3 bg-info">
-                    <ul class ="list-unstyled bg-info text-white">
+                <div class = "card bg-dark p-3">
+                    <ul class ="list-unstyled bg-dark text-white">
                         <li>${rightnow.format("MM/DD/YY")}</li>
                         <li class = "weatherIcon"><img src="${iconsrc}"</li>
                         <li>Temp: ${daytime.main.temp}F°</li>

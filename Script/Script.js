@@ -115,7 +115,8 @@ $('#searchBtn').on('click', function() {
     if (!lastSearched.includes(city)) {
         lastSearched.push(city)
         var foundcity = $(`
-        <li class= "list-group-item mb-2">${city}</li>
+        <li class= "list-group-item list-group-item bg-danger
+         text-white mb-2">${city}</li>
         `);
         $('#cities').append(foundcity);
     };

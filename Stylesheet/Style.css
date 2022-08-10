@@ -1,3 +1,7 @@
+body {
+    height: 100%
+}
+
 .bg-dark {
     font-weight: bold;
     background: linear-gradient(135deg, #0000 45%, rgb(82, 16, 73));
@@ -9,9 +13,11 @@
     min-height: auto;
 }
 #cities {
-    flex-flow: column nowrap;
+    flex-flow: row wrap;
     min-width: 35%;
+    justify-content: space-around;
 }
+
 .btn {
     min-width: 20%;
 }
@@ -36,7 +42,8 @@
 }
 
 .list-group {
-    float: left;
+    display: flex;
+    flex-direction: row;
     min-width: 20%
 }
 

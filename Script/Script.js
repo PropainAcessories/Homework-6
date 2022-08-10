@@ -169,5 +169,7 @@ $(document).ready(function() {
      }
 });
 
+
+// Function calling.
 currentWeather();
 forecast();

@@ -1,6 +1,7 @@
 .bg-dark {
     font-weight: bold;
     background: linear-gradient(135deg, #0000 45%, rgb(82, 16, 73));
+    min-width: 100%;
 }
 
 .float-left {
@@ -15,7 +16,7 @@
     min-width: 20%;
 }
 
-.float-md-right {
+.float-right {
     min-width: 60%;
     min-height: auto;
 }
@@ -36,6 +37,7 @@
 
 .list-group {
     float: left;
+    min-width: 20%
 }
 
 #uvIndex {
@@ -55,31 +57,9 @@
     background-color: orange;
 }
 
-@media screen and (max-width: 1400px) {
-    body {
-        flex-flow: column wrap;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    body {
-        flex-flow: column wrap;
-    }
-}
-
-@media screen and (max-width: 992px) {
-    body {
-        flex-flow: column wrap;
-    }
-}
-
 @media screen and (max-width: 768px) {
-    body {
-        flex-flow: column wrap;
-    }
-    
     .list-group {
-        flex-flow : row wrap;
+        flex-flow : row nowrap;
     }
 
     .jumbotron {
@@ -88,12 +68,8 @@
 }
 
 @media screen and (max-width: 576px) {
-    body {
-        flex-flow: column wrap;
-    }
-    
     .list-group {
-        flex-flow : row wrap;
+        flex-flow : row nowrap;
         flex: 0 2 0;
     }
  
@@ -103,10 +79,6 @@
 }
 
 @media screen and (max-width: 360px) {
-    body {
-        flex-flow: column wrap;
-    }
-   
     .list-group {
         flex-flow : row wrap;
         flex: 0 4 0;

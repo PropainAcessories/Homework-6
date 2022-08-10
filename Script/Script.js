@@ -137,7 +137,8 @@ $('#searchBtn').on('click', function(event) {
         `);
         // well this guy does it
         $('#cities').append(foundcity);
-    }
+    } 
+    
     localStorage.setItem("city", JSON.stringify(lastSearched));
     console.log(lastSearched);
     currentLoc = $('#userSearch').val().trim();

@@ -4,6 +4,7 @@ body {
 
 header {
     min-width: 100%;
+    min-height: auto;
 }
 
 .bg-dark {

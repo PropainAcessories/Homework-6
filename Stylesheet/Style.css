@@ -69,28 +69,28 @@ header {
 
 @media (max-width: 768px) {
     .list-group {
-        flex-flow : row nowrap;
+        flex-flow : row wrap;
     }
 }
 
 @media (max-width: 576px) {
     .list-group {
-        flex-flow : row nowrap;
+        flex-flow : row wrap;
         flex: 0 2 0;
     }
  
     .jumbotron {
-        flex: 0 4 0;
+        flex: 0 2 0;
     }
 }
 
 @media (max-width: 360px) {
     .list-group {
         flex-flow : row wrap;
-        flex: 0 4 0;
+        flex: 0 2 0;
     }
     
     .jumbotron {
-        flex: 0 4 0;
+        flex: 0 2 0;
     }
 }

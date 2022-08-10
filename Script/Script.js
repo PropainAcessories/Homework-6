@@ -137,7 +137,9 @@ $('#searchBtn').on('click', function(event) {
         `);
         // well this guy does it
         $('#cities').append(foundcity);
-    } 
+    } else if (city.response.status === 404) {
+        return;
+    }
     
     localStorage.setItem("city", JSON.stringify(lastSearched));
     console.log(lastSearched);

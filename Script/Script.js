@@ -6,10 +6,10 @@ var foundcity = "";
 
 function currentWeather () {
     // What the user inputs
-    city = $('#userSearch').val().trim();
+    var city = $('#userSearch').val().trim();
     // The url im pulling information from
    var queryURL =  "https://api.openweathermap.org/data/2.5/weather?q=" +
-   city + "&units=imperial" + "&appid=" + APIkey;
+   city + "&units=imperial" + "&APPID=" + APIkey;
 
    // Fetches a response and returns it as a javascript object.
     fetch(queryURL)
@@ -77,7 +77,6 @@ function currentWeather () {
 function forecast () {
     // User search input
     var city = $('#userSearch').val().trim();
-
     // API url for forecast
     var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q="
     + city + "&units=imperial" + "&APPID=" + APIkey;
@@ -123,11 +122,12 @@ function forecast () {
       $('#forecast').html(forecasthtml);
     })
 };
+
 // Search button
 $('#searchBtn').on('click', function() {
 
     var city = $('#userSearch').val().trim();
-    currentWeather(city);
+    currentWeather();
     // puts new inputs to the list
     if (!currentLoc.includes(city)) {
         lastSearched.push(city)
@@ -140,7 +140,6 @@ $('#searchBtn').on('click', function() {
     }
 
     localStorage.setItem("city", JSON.stringify(lastSearched));
-    //console.log(lastSearched);
     //currentLoc = $('#userSearch').val().trim();
     currentWeather(lastSearched);
 });
@@ -160,6 +159,17 @@ $(document).on('click', '.list-group-item',  function() {
 });
 
 
-// Function calling.
-currentWeather();
-forecast();
+// This is supposed to display the last searched city, and for a while it did.
+//After I got the forecast to work this quit; I tried everything I knew how to do
+//It  just quit working and nothing else worked either.
+$(document).ready(function() {
+    var searchHistory = JSON.parse(localStorage.getItem("city"));
+    
+    if (searchHistory !== null) {
+        var lastSearch = searchHistory.length - 1;
+        var lastCity = searchHistory[lastSearch];
+        currentWeather(lastCity);
+        console.log(lastCity)
+    }
+
+});

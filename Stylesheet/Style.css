@@ -67,9 +67,18 @@ header {
     background-color: orange;
 }
 
-@media (max-width: 768px) {
+
+
+@media (max-width: 1040px) {
+    .list-group {
+       flex-flow: row wrap;
+    }
+}
+
+@media (max-width: 790px) {
     .list-group {
         flex-flow : row wrap;
+        flex: 0 2 0;
     }
 }
 
@@ -80,17 +89,21 @@ header {
     }
  
     .jumbotron {
+        min-width: 100%;
+        min-height: auto;
         flex: 0 2 0;
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 384px) {
     .list-group {
         flex-flow : row wrap;
-        flex: 0 2 0;
+        flex: 0 4 0;
     }
     
     .jumbotron {
-        flex: 0 2 0;
+        min-width: 100%;
+        min-height: auto;
+        flex: 0 4 0;
     }
 }

@@ -92,7 +92,7 @@ function forecast () {
         $('#forecast').empty()
     // This is the start of the forecast variable    
     var forecasthtml = `
-    <h5 class ="display-5">Forecast:</h5>
+    <h5 class ="display-5 text-white">Forecast:</h5>
     <div id ="fiveDayForecstUl" class = "d-flex flex-wrap p-3">`;
     // The loop that writes my forecasts
     for (let i=0; i < Response.list.length; i++) {
@@ -124,8 +124,8 @@ function forecast () {
     })
 };
 // Search button
-$('#searchBtn').on('click', function(event) {
-    event.preventDefault();
+$('#searchBtn').on('click', function() {
+
     var city = $('#userSearch').val().trim();
     currentWeather(city);
     // puts new inputs to the list
@@ -137,14 +137,12 @@ $('#searchBtn').on('click', function(event) {
         `);
         // well this guy does it
         $('#cities').append(foundcity);
-    } else if (city.response.status === 404) {
-        return;
     }
-    
+
     localStorage.setItem("city", JSON.stringify(lastSearched));
-    console.log(lastSearched);
-    currentLoc = $('#userSearch').val().trim();
-    currentWeather(city);
+    //console.log(lastSearched);
+    //currentLoc = $('#userSearch').val().trim();
+    currentWeather(lastSearched);
 });
 
 // clears the city list.
@@ -156,20 +154,9 @@ $('#resetBtn').on("click", function(event) {
 })
 
 //makes the list group items do the weather when you click on them.
-$(document).on('click', '.list-group-item',  function(event) {
-    $('#userSearch').val(event.target.textContent);
-    currentLoc = $('#userSearch').val();
-    currentWeather();
-});
-
-// Shows the last searched city on the screen if you exit and come back.
-$(document).ready(function() {
-     var searchHistory = JSON.parse(localStorage.getItem("city"));
-     if (searchHistory !== null) {
-         var searchIndex = searchHistory.length - 1;
-         var lastCity = searchHistory[searchIndex];
-         currentWeather(lastCity);
-     }
+$(document).on('click', '.list-group-item',  function() {
+    var cityList = $(this).text();
+    currentWeather(cityList)
 });
 
 

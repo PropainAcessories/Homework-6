@@ -6,18 +6,16 @@ var foundcity = "";
 
 function currentWeather () {
     // What the user inputs
-    var city = $('#userSearch').val().trim();
+    city = $('#userSearch').val().trim();
     // The url im pulling information from
    var queryURL =  "https://api.openweathermap.org/data/2.5/weather?q=" +
-   city + "&units=imperial" + "&APPID=" + APIkey;
-
+   city + "&units=imperial" + "&appid=" + APIkey;
    // Fetches a response and returns it as a javascript object.
     fetch(queryURL)
     .then(function(response){
        return response.json();
     })
     .then(function(response){
-
         // Icons.
         var weatherIcon = "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png"
         // Response from the API about data receiving time GMT.
@@ -28,7 +26,6 @@ function currentWeather () {
         var timeZoneoffset = Timezone / 60 /60;
         // Uses moment and API response to hash out current time.
         var rightnow = moment.unix(utcTime).utc().utcOffset(timeZoneoffset);
-
         // It took me forever to figure out to use ` these. 
         // Thanks stack overflow guy from 2014; also this writes html.
         var Weatherhtml = `
@@ -43,7 +40,6 @@ function currentWeather () {
         $('#Weather').html(Weatherhtml);
         // Conducts the forecast for the relevant city
         forecast(city);
-
         // The responses from the server for coordinates and latitude.
         var lat = response.coord.lat;
         var long = response.coord.lon;
@@ -61,7 +57,6 @@ function currentWeather () {
             var uvIndex = response.value;
             $('#uvIndex').html(`UV Index: <span class = "text-white" id = "#uvIndex"> ${uvIndex}</span>`);
             
-
             //Sets the background color of the uv index
             if (uvIndex >= 0 || uvIndex < 3) {
                 $('#uvIndex').attr("class","uv-good");
@@ -80,7 +75,6 @@ function forecast () {
     // API url for forecast
     var queryUrl = "https://api.openweathermap.org/data/2.5/forecast?q="
     + city + "&units=imperial" + "&APPID=" + APIkey;
-
     // Fetches and returns as a javascript object
     fetch(queryUrl)
     .then(function(Response) {
@@ -91,7 +85,7 @@ function forecast () {
         $('#forecast').empty()
     // This is the start of the forecast variable    
     var forecasthtml = `
-    <h5 class ="display-5 text-white">Forecast:</h5>
+    <h5 class ="display-5">Forecast:</h5>
     <div id ="fiveDayForecstUl" class = "d-flex flex-wrap p-3">`;
     // The loop that writes my forecasts
     for (let i=0; i < Response.list.length; i++) {
@@ -101,7 +95,6 @@ function forecast () {
         var daytimeOffset = timezone /60 /60;
         var rightnow = moment.unix(daytimeUtc).utc().utcOffset(daytimeOffset);
         var iconsrc = "https://openweathermap.org/img/w/" + daytime.weather[0].icon + ".png";
-
         // Gets current forecasts
         if (rightnow.format("HH:mm:ss") === "11:00:00" ||
             rightnow.format("HH:mm:ss") === "12:00:00" ||
@@ -124,24 +117,27 @@ function forecast () {
 };
 
 // Search button
-$('#searchBtn').on('click', function() {
-
+$('#searchBtn').on('click', function(event) {
+    event.preventDefault();
     var city = $('#userSearch').val().trim();
-    currentWeather();
+    currentWeather(city);
     // puts new inputs to the list
     if (!currentLoc.includes(city)) {
         lastSearched.push(city)
         var foundcity = $(`
-        <li class= "list-group-item list-group-item bg-danger
+        <li class= "list-group-item bg-danger
          text-white mb-2">${city}</li>
         `);
         // well this guy does it
         $('#cities').append(foundcity);
+    } else if (city.response.status === 404) {
+        return;
     }
 
     localStorage.setItem("city", JSON.stringify(lastSearched));
-    //currentLoc = $('#userSearch').val().trim();
-    currentWeather(lastSearched);
+    console.log(lastSearched);
+    currentLoc = $('#userSearch').val().trim();
+    currentWeather(city);
 });
 
 // clears the city list.
@@ -153,23 +149,23 @@ $('#resetBtn').on("click", function(event) {
 })
 
 //makes the list group items do the weather when you click on them.
-$(document).on('click', '.list-group-item',  function() {
-    var cityList = $(this).text();
-    currentWeather(cityList)
+$(document).on('click', '.list-group-item',  function(event) {
+    $('#userSearch').val(event.target.textContent);
+    currentLoc = $('#userSearch').val();
+    currentWeather();
 });
 
-
-// This is supposed to display the last searched city, and for a while it did.
-//After I got the forecast to work this quit; I tried everything I knew how to do
-//It  just quit working and nothing else worked either.
+// Shows the last searched city on the screen if you exit and come back.
 $(document).ready(function() {
-    var searchHistory = JSON.parse(localStorage.getItem("city"));
-    
-    if (searchHistory !== null) {
-        var lastSearch = searchHistory.length - 1;
-        var lastCity = searchHistory[lastSearch];
-        currentWeather(lastCity);
-        console.log(lastCity)
-    }
-
+     var searchHistory = JSON.parse(localStorage.getItem("city"));
+     if (searchHistory !== null) {
+         var searchIndex = searchHistory.length - 1;
+         var lastCity = searchHistory[searchIndex];
+         currentWeather(lastCity);
+     }
 });
+
+// Function calling.
+currentWeather();
+forecast();
+
